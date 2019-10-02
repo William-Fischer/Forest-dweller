@@ -1,0 +1,64 @@
+#include <kipr/botball.h>
+int l_motor = 0;
+int r_motor = 3;
+int speed = 40;
+int speed_slow = 10;
+int sleep_time = 2000;
+int counter = 0;  //true variable
+int l_bump = 0;
+int r_bump = 9;
+int main()
+{
+    shut_down_in(300.0);
+    while(1){ //as long as the log test is true,everything in the braces will continue to loop
+                         //When it becomes false, it will stop looping
+       forward();
+         if(digital(l_bump)){
+                       //if it hits something...
+                backward();
+             msleep(sleep_time);
+               left_turn();
+
+              msleep(sleep_time);
+            
+           //back up
+           //turn to the left or right                     
+         }
+        
+        if(digital(r_bump)){
+                       //if it hits something...
+               backward();
+            msleep(sleep_time);
+               right_turn();
+             msleep(sleep_time);
+             
+
+           //back up
+           //turn to the left or right                     
+         }
+    }                                                                                                                                                                                                                                                
+    return 0;
+}
+//Function Definitions//
+void forward(){
+motor(l_motor, speed);
+motor(r_motor, speed);
+}
+void backward(){
+motor(l_motor, -speed);
+motor(r_motor, -speed);
+   
+    ao();
+}
+void left_turn(){
+motor(l_motor, -speed_slow);   //run motor in port 5 at half speed
+motor(r_motor, speed);   //run motor in port 2 at half speed
+        msleep(sleep_time);
+    ao();
+}
+void right_turn(){
+motor(l_motor, speed);
+motor(r_motor, -speed_slow);
+    msleep(sleep_time);
+    ao();
+}
